@@ -2,7 +2,7 @@ require('./_INCLUDE_THIS.rb')
 
 res=`http #{IP_ADDRESS}`
 puts res
-if res.include? 'xenia-deployment-manager-server root'
+if res.include? 'xenia-fleet-server root'
   passed = true
 end
 

@@ -16,7 +16,7 @@ fastify.route({
   method: 'GET',
   url: '/',
   handler: function (request, reply) {
-    reply.send('xenia-deployment-manager-server root')
+    reply.send('xenia-fleet-server root')
   }}
 )
 

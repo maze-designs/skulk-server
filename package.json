@@ -1,5 +1,5 @@
 {
-  "name": "xenia-deployment-manager-server",
+  "name": "xenia-fleet-server",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
