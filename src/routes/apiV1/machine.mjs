@@ -57,9 +57,7 @@ async function router (fastify, options) {
     await machine.create(newMachine)
 
   res.code(201).send(
-    JSON.stringify({
-      comm_key: newMachine.comm_key
-    }) 
+    newMachine.comm_key
   )
   })
   
