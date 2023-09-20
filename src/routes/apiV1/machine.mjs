@@ -38,11 +38,13 @@ async function router (fastify, options) {
     let uuid, comm_key;
 
     // check if uuids unique
-    do {uuid = uuidv4(); console.warn("uuid not unique; regenerating")}
-    while (await machine.findOne( {"uuid": uuid} ) != undefined)
+    do {uuid = uuidv4()}
+    while (await machine.findOne( {"uuid": uuid} ) != undefined
+      && console.warn("uuid not unique; regenerating" ))
 
-    do {comm_key = uuidv4();  console.warn("key not unique; regenerating")}
-    while (await machine.findOneIn( {"comm_key": comm_key} ) != undefined) 
+    do {comm_key = uuidv4()}
+    while (await machine.findOneIn( {"comm_key": comm_key} ) != undefined
+      && console.warn("key not unique; regenerating" )) 
 
   const newMachine = {
       uuid: uuid, 
