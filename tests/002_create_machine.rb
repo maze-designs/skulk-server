@@ -5,9 +5,9 @@ passed=false
 
 res=`http post #{IP_ADDRESS}/api/v1/machine/register hostname=#{TM_HOSTNAME} -j`
 puts res
-#if res.include? 'xenia-deployment-manager-server root'
-#  passed = true
-#end
+if res =~ /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/
+  passed = true
+end
 
 test_result('create machine', passed)
 
