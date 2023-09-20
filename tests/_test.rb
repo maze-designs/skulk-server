@@ -1,7 +1,15 @@
+# no colors if piped
+# if $stdin.tty? == false
+#   RED = ""
+#   GREEN = ""
+#   YELLOW = ""
+#   ENDCOLOR = ""
+# else
   RED = "\e[31m"
   GREEN = "\e[32m"
   YELLOW = "\e[33m"
   ENDCOLOR = "\e[0m"
+# end
 
 def test_result (test_name, passed=true, fail_detail="", fatal=true) 
   puts "[#{passed ? GREEN : RED}#{passed ? "PASSED" : "FAILED"}#{ENDCOLOR}] #{test_name}"
