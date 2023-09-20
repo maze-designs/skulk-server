@@ -1,0 +1,16 @@
+{
+  "name": "xenia-deployment-manager-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "node src/main.mjs"
+  },
+  "dependencies": {
+    "fastify": "^4.22.2",
+    "pino-pretty": "^10.2.0",
+    "sqlite3": "^5.1.6",
+    "trilogy": "^2.0.5",
+    "uuid": "^9.0.1"
+  }
+}
