@@ -2,9 +2,10 @@
 
 cd "${0%/*}"
 
+if [[ -z "${TEST}" ]]; then
 echo "Make sure the server is running and you've removed the database file prior to running."
-
 read -p "Press enter to continue"
+fi
 
 fail_trigger="Fatal - Terminating"
 
