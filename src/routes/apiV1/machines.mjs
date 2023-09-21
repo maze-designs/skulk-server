@@ -1,24 +1,28 @@
 import { db, machine } from "../../dbV1.mjs"
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4, validate as uuid_validate } from 'uuid';
 
 const authByDefault = false // TODO: read env
 
-async function router(fastify, options) {
-
-  fastify.get('/', async (req, res) => {
-
-    const machines = await machine.find()
+const getMachines = async () => {
+const machines = await machine.find()
 
     if (machines.length === 0) {
-      res.send({})
-      return
+      return {}
     }
 
     machines.forEach((_, i, array) => {
       delete array[i].comm_key
 
     })
-    res.send(machines)
+
+  return machines
+
+}
+
+async function router(fastify, options) {
+
+  fastify.get('/', async (req, res) => {
+        res.send(await getMachines())
   })
 
 
@@ -41,7 +45,7 @@ async function router(fastify, options) {
 
     // check if uuids unique
     do {uuid = uuidv4()}
-    while (await machine.findOne({"uuid": uuid}) != undefined
+    while (await machine.findOneIn({"uuid": uuid}) != undefined
       && console.warn("uuid not unique; regenerating"))
 
     do {comm_key = uuidv4()}
@@ -56,7 +60,7 @@ async function router(fastify, options) {
       authorized: authByDefault
     }
 
-    console.log(newMachine)
+   // console.log(newMachine)
 
     await machine.create(newMachine)
 
@@ -64,7 +68,8 @@ async function router(fastify, options) {
       newMachine.comm_key
     )
   })
-  fastify.delete('/', (req, res) => {
+
+  fastify.delete('/', async (req, res) => {
     try {
       req.body.machineUUID
     }
@@ -72,7 +77,24 @@ async function router(fastify, options) {
       res.code(400).send(
         "Specify machineUUID property"
       )
+      return
     }
+    
+    if (!uuid_validate(req.body.machineUUID)) {
+      res.code(400).send(
+        "Malformed machineUUID"
+      )
+      return
+    }
+
+    if (await machine.findOneIn({"uuid": req.body.machineUUID}) == undefined) {
+      res.code(404).send(
+        "Machine not found"
+      )
+      return
+    }
+    machine.remove({ uuid: req.body.machineUUID })
+    res.send(await getMachines())
 
   })
 
