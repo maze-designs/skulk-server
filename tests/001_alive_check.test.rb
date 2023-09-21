@@ -8,7 +8,9 @@ end
 
 test_result('root ping', passed)
 
-res=`http #{IP_ADDRESS}/api/v1`
+
+passed = false
+res=`http #{IP_ADDRESS}/v1`
 
 if res.include? 'API v1 root'
   passed = true
