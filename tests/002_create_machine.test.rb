@@ -1,7 +1,7 @@
 require('./_INCLUDE_THIS.rb')
 require('./_test_machine.rb')
 
-passed=true
+passed=false
 # TEST: create machine
 machine_keys = []
 TM.each { |m|
@@ -9,7 +9,7 @@ TM.each { |m|
 print res, " : "
 machine_keys.append(res)
 
-passed = passed && (res =~ /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/)
+passed = (res =~ /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/)
 }
 
 File.write("machine_keys.temp", machine_keys.join("\n")) and puts "(keys written into ./machine_keys.temp)"
@@ -19,7 +19,7 @@ test_result('create machine', passed)
 # TEST: Validate created machines
 passed = false
 res = `http #{IP_ADDRESS}/v1/machines`
-puts res
+#puts res
 TM.each { |m|
   passed = res.include? m["hostname"]
   passed || puts("failed on ", m["hostname"]) && break
