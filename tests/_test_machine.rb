@@ -3,12 +3,12 @@
 
 TM=[
   {
-    "hostname" => "test1"
+    "hostname" => "hi"
   },
   {
-    "hostname" => "test2"
+    "hostname" => "luna"
   },
   {
-    "hostname" => "test3"
+    "hostname" => "brrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr"
   },
 ]
