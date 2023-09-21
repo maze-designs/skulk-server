@@ -10,7 +10,7 @@ const fastify = Fastify({
   }
 })
 
-fastify.register(apiv1, {prefix: '/api/v1'})
+fastify.register(apiv1, {prefix: '/v1'})
 
 fastify.route({
   method: 'GET',

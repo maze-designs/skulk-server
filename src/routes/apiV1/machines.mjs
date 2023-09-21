@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 const authByDefault = false // TODO: read env
 
-async function router (fastify, options) {
+async function router(fastify, options) {
 
   fastify.get('/', async (req, res) => {
 
@@ -22,12 +22,14 @@ async function router (fastify, options) {
   })
 
 
-  fastify.post('/register', async (req, res) => {
+  fastify.post('/', async (req, res) => {
 
-  try {
-    req.body.hostname
-  }
-  catch
+    // NOTE: Does *not* respond with JSON
+
+    try {
+      req.body.hostname
+    }
+    catch
     {
       res.code(400).send(
         "Hostname not supplied"
@@ -39,15 +41,15 @@ async function router (fastify, options) {
 
     // check if uuids unique
     do {uuid = uuidv4()}
-    while (await machine.findOne( {"uuid": uuid} ) != undefined
-      && console.warn("uuid not unique; regenerating" ))
+    while (await machine.findOne({"uuid": uuid}) != undefined
+      && console.warn("uuid not unique; regenerating"))
 
     do {comm_key = uuidv4()}
-    while (await machine.findOneIn( {"comm_key": comm_key} ) != undefined
-      && console.warn("key not unique; regenerating" )) 
+    while (await machine.findOneIn({"comm_key": comm_key}) != undefined
+      && console.warn("key not unique; regenerating"))
 
-  const newMachine = {
-      uuid: uuid, 
+    const newMachine = {
+      uuid: uuid,
       comm_key: comm_key,
       hostname: req.body.hostname,
       friendly_name: '',
@@ -58,11 +60,22 @@ async function router (fastify, options) {
 
     await machine.create(newMachine)
 
-  res.code(201).send(
-    newMachine.comm_key
-  )
+    res.code(201).send(
+      newMachine.comm_key
+    )
   })
-  
+  fastify.delete('/', (req, res) => {
+    try {
+      req.body.machineUUID
+    }
+    catch {
+      res.code(400).send(
+        "Specify machineUUID property"
+      )
+    }
+
+  })
+
 
 }
 export default router
