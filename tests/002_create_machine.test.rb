@@ -5,7 +5,7 @@ passed=false
 # TEST: create machine
 machine_keys = []
 TM.each { |m|
-  res=`http post #{IP_ADDRESS}/v1/machines hostname=#{m["hostname"]} -j`
+  res=`http post #{IP_ADDRESS}/v1/agents hostname=#{m["hostname"]} -j`
 print res, " : "
 machine_keys.append(res)
 

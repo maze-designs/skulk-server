@@ -29,34 +29,34 @@ import { connect } from "trilogy"
 export const db = await versionCheck()
 
 
-export const machine = await db.model('machine', {
+export const machines = await db.model('v1_machines', {
     uuid: { type: String, unique: true, primary: true },
     comm_key: String,
     hostname: String,
     friendly_name: String,
+    tags: Array,
     authorized: Boolean
   })
-export const machineData = await db.model('machineData', {
-    id: { type: Number, primary: true, unique: true},
+export const machineData = await db.model('v1_machineData', {
+    uuid: { type: String, primary: true, unique: true},
     xenia_release: Number,
     xenia_flavor: String,
     xenia_rootimg_hash: String,
     xenia_rootimg_timestamp: Date,
-    local_ip: String,
-    dns_resolver: Array
+    local_ips: Array,
+    dns_resolvers: Array
   }, {
     timestamps: true
   })
-export const machinePer = await db.model('machinePer', {
-    id: { type: Number, primary: true, unique: true},
+export const machinePer = await db.model('v1_machinePer', {
+    uuid: { type: String, primary: true, unique: true},
     online: Boolean,
     dns_pingtime: Number, // -1 as failed
     uptime_min: Number,
     shutdown_reason: String,
     services_failed: Array,
     mount_usage: Object,
-    last_telemetry_query: Date,
-    last_queue_query: Date
+    extra: Object
   }, {
     timestamps: true
   })

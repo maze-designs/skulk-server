@@ -1,17 +1,11 @@
 
 
-v1
-  machine
+/v1
+  /machine
     :GET
       => No body => JSON
       Lists registered machines
       ex. res: {"uuid":"b0bece5c-114a-4dd6-b539-cb38c107fcf9","hostname":"test1","friendly_name":"","authorized":false}
-
-    :POST
-      => JSON { hostname: String } => Raw ( comm_key: UUID String )
-      Registers a machine (client), responds with 201 and a uuid string used for later communication (!not json)
-      ex. res: "ab3d92b7-a193-46cc-85d6-5984e7772b77"
-      NOTE: communication key *is not* the machine uuid, :GET does not show the communication key
 
     :DELETE
       => JSON { machineUUID: UUID String } => JSON
@@ -20,3 +14,23 @@ v1
       Returns 400 if UUID isn't present in body or is malformed
       ex. req: {"machineUUID":"ab3d92b7-a193-46cc-85d6-5984e7772b77"}
       ex. res: see :GET
+
+  agents
+    :POST
+      => JSON { hostname: String } => Raw ( comm_key: UUID String )
+      Registers a machine (client), responds with 201 and a uuid string used for later communication (!not json)
+      ex. res: "ab3d92b7-a193-46cc-85d6-5984e7772b77"
+      NOTE: communication key *is not* the machine uuid, :GET does not show the communication key
+
+  /boot
+    :POST
+    => JSON
+    To report basic data on boot
+    ex. req:  {
+    xenia_release: 0.4,
+    xenia_flavor: gnome,
+    xenia_rootimg_hash: 89bcd5725249c1648e9aee29a6a9b8730158177e48b1bc581bef0ed805373faf,
+    xenia_rootimg_timestamp: 1692655374,
+    local_ips: "10.0.0.78;10.1.0.22",
+    dns_resolvers: "10.0.0.253;1.1.1.1;8.8.8.8"
+  },
