@@ -1,7 +1,7 @@
 
 
 /v1
-  /machine
+  /machines
     :GET
       => No body => JSON
       Lists registered machines
