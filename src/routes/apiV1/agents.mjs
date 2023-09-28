@@ -76,12 +76,14 @@ async function router(fastify, options) {
     }
     catch {
       res.code(400).send("Data property not present")
+      return res
     }
     try {
-      req.body.comm_key
+      req.body.comm_key.toString()
     }
     catch {
       res.code(401).send("Missing comm_key")
+      return res
     }
     
     // console.log(Object.keys(machineData.schema))
@@ -106,15 +108,15 @@ async function router(fastify, options) {
       else {
 
       try { data[field] = body[field].toString() }
-      catch { console.log("missing/malformed field " + field); console.log(req)}
+        catch { console.log("missing/malformed field " + field); /* console.log(req)*/}
       }
 
-      res.send()
+      console.table(data)
+      console.log(data)
 
     })
     
-
-    
+    res.send()
   })
 }
 export default router
