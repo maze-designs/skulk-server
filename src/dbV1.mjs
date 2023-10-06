@@ -60,4 +60,10 @@ export const machinePer = await db.model('v1_machinePer', {
   }, {
     timestamps: true
   })
+  export const user = await db.model('v1_user', {
+  uuid: { type: String, primary: true, unique: true},
+  username: String,
+  password: String,
+  permLevel: Number
+  })
 
