@@ -71,8 +71,10 @@ async function router(fastify, options) {
   })
 
   fastify.post('/boot', async (req, res) => {
+    let body = {}
     try {
-      const body = req.body.data
+      req.body.data.toString()
+      body = req.body.data
     }
     catch {
       res.code(400).send("Data property not present")
@@ -97,7 +99,7 @@ async function router(fastify, options) {
     "dns_resolvers"
   ]
     const data = {}
-
+    
     dataFields.forEach(field => {
 
       if (field === "local_ips" || field === "dns_resolvers") {
@@ -107,13 +109,11 @@ async function router(fastify, options) {
       }
       else {
 
-      try { data[field] = body[field].toString() }
-        catch { console.log("missing/malformed field " + field); /* console.log(req)*/}
+      try { data[field] = body[field] }
+        catch { console.log("missing/malformed field " + field); }
       }
-
-      console.table(data)
       console.log(data)
-
+    
     })
     
     res.send()
