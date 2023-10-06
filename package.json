@@ -7,6 +7,7 @@
     "dev": "node src/main.mjs"
   },
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "fastify": "^4.22.2",
     "pino-pretty": "^10.2.0",
     "sqlite3": "^5.1.6",
